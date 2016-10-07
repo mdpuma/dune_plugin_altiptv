@@ -1229,8 +1229,71 @@ class DemoM3uTv extends AbstractTv implements UserInputHandler
 		$epg_type = 9;
 	else if (($channel_id > 10999) && ($channel_id < 12000)&&(!$epg_type == 2))
 		$epg_type = 10;
+	else if (($channel_id > 11999) && ($channel_id < 13000)&&(!$epg_type == 2))
+		$epg_type = 13;
 	else if (($channel_id > 19999)&&(!$epg_type == 2))
 	return array();
+	
+	// point.md EPG
+	if ($epg_type == 13)
+	{
+		$point_id = HD::get_epg_ids($plugin_cookies,'vsetv_pointmd', $channel_id);
+		if ($point_id == false)
+			return array();
+			
+		$q_date = date("d-m-Y", $day_start_ts);
+		$epg_date = date("Ymd", $day_start_ts);
+		$epg = array();
+
+		if (file_exists(DuneSystem::$properties['tmp_dir_path']."/channel_".$channel_id."_".$day_start_ts)) {
+			$epg = unserialize(file_get_contents(DuneSystem::$properties['tmp_dir_path']."/channel_".$channel_id."_".$day_start_ts));
+		}
+		else {
+			try {
+				//https://point.md/ru/tv/%s/%s', $channel, $epg_date
+				$doc = HD::http_get_document("https://point.md/ru/tv/$point_id/$q_date");
+			}
+			catch (Exception $e) {
+				hd_print("Can't fetch EPG ID:$point_id DATE:$q_date");
+				return array();
+			}
+			
+			$doc = preg_replace("/\n/", "", $doc);
+
+			$patterns = "/<li class=\"(m-old)?\"><i>([0-9:]+)<\/i>([^<]+)<\/li>/";
+			$replace = "[$2|$3]\n";
+			$doc = strip_tags(preg_replace($patterns, $replace, $doc));
+
+			preg_match_all("/\[([0-9:]+)\|([^\]]+)\]/", $doc, $matches);
+
+			if(empty($matches[1])) throw new Exception('No EPG data.');
+			$last_time = 0;
+			foreach($matches[1] as $key => $time) {
+				$name = htmlspecialchars_decode($matches[2][$key]);
+				$u_time = strtotime("$epg_date $time");
+				$last_time = ($u_time < $last_time) ? $u_time + 86400  : $u_time;
+				$epg[$last_time]["name"] = $name;
+				$epg[$last_time]["desc"] = '';
+			}
+			
+			file_put_contents(DuneSystem::$properties['tmp_dir_path']."/channel_".$channel_id."_".$day_start_ts, serialize($epg));
+		}
+		$epg_result = array();
+		ksort($epg, SORT_NUMERIC);
+		foreach ($epg as $time => $value) {
+		    $epg_result[] =
+			new DefaultEpgItem(
+			    strval($value["name"]),
+			    strval($value["desc"]),
+			    intval($time + $epg_shift),
+			    intval(-1));
+		}
+		return new EpgIterator(
+			$epg_result,
+			$day_start_ts,
+			$day_start_ts + 100400);
+	}
+	
 	if ($epg_type == 10)
 	{
 	$teleman_id = HD::get_epg_ids($plugin_cookies,'vsetv_teleman', $channel_id);
