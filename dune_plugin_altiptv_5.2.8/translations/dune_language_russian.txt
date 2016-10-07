@@ -1,0 +1,7 @@
+﻿yes = Да
+no = Нет
+names_of_playlists = Названия плейлистов
+сategories_of_plug = Категории каналов из плагина
+сategories_of_channels_from_playlist = Категории каналов из плейлиста
+uncategorised = Без категорий
+plugin = Плагин

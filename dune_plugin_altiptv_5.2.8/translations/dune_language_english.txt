@@ -1,0 +1,7 @@
+﻿yes = Yes
+no = No
+names_of_playlists = Names of playlists
+сategories_of_plug = Categories channels of plugin
+сategories_of_channels_from_playlist = Сategories of channels from playlist
+uncategorised = Uncategorised
+plugin = Plugin
