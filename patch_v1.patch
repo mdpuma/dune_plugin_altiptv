@@ -1,0 +1,512 @@
+diff --git a/README.MD b/README.MD
+new file mode 100644
+index 0000000..8dfe828
+--- /dev/null
++++ b/README.MD
+@@ -0,0 +1,18 @@
++## altiptv 5.2.8 with point.md epg support ##
++
++Взято с http://forum.hdtv.ru/index.php?showtopic=12094
++
++Список id для каналов
++
++	- добавлены источники EPG, всего на сейчас 9 источников + jtv :
++	1) id 1-2999 vsetv.com (оставил id про запас) Эти каналы по попап "задать id vsetv" без пометок.
++	2) jtv (эксперементально, развиватся не будет).
++	3) id 3000-4999 mail.ru (оставил id про запас) Эти каналы по попап "задать id vsetv" c пометкой [mail.ru].
++	4) id 5000-5999 akado.ru (оставил id про запас) Эти каналы по попап "задать id vsetv" c пометкой [akado].
++	5) id 6000-6999 ntvplus.ru (оставил id про запас) Эти каналы по попап "задать id vsetv" c пометкой [ntv].
++	6) id 7000-7999 tvspielfilm.de Германия (оставил id про запас) Эти каналы по попап "задать id vsetv" c пометкой [tvsfilm].
++	7) id 8000-8999 tvlistings.eu.pn Англия (оставил id про запас) Эти каналы по попап "задать id vsetv" c пометкой [UKtvlist].
++	8) id 9000-9999 teleguide.info (оставил id про запас) Эти каналы по попап "задать id vsetv" c пометкой [tgv_inf].
++	9) id 10000-10999 tvprograma.lt Литва (оставил id про запас) Эти каналы по попап "задать id vsetv" c пометкой [tvprlt].
++	10) id 11000-11999 teleman.pl Польша (оставил id про запас) Эти каналы по попап "задать id vsetv" c пометкой [teleman.pl].
++	11) id 12000-13000 point.md Молдова
+\ No newline at end of file
+diff --git a/build.sh b/build.sh
+new file mode 100644
+index 0000000..c9d3fe5
+--- /dev/null
++++ b/build.sh
+@@ -0,0 +1,4 @@
++#!/bin/bash
++
++cd dune_plugin_altiptv_5.2.8
++zip -r ../dune_plugin_altiptv_latest.zip * -x *.zip data/logo/*
+diff --git a/create_serialize.php b/create_serialize.php
+new file mode 100644
+index 0000000..367e814
+--- /dev/null
++++ b/create_serialize.php
+@@ -0,0 +1,194 @@
++<?php 
++
++$var = '12000	prime
++12001	publika
++12002	tv7
++12003	tnt-bravo
++12004	ctc
++12005	jurnaltv
++12006	rtr
++12007	protv-moldova
++12008	eurotv
++12009	sony
++12010	noroctv
++12011	n4
++12012	2plus
++12013	acasa
++12014	tvc21
++12015	mbc
++12016	moldova1
++12017	tvr
++12018	accent-tv
++12019	zona-m
++12020	busuioc-tv
++12021	vocea-basarabiei
++12022	rentv
++12023	tnt
++12024	365days
++12025	autoplus
++12026	boec
++12027	india
++12028	interesnoetv
++12029	comediatv
++12030	kuhnyatv
++12031	mama-tv
++12032	multimania
++12033	park-razvlecheniy
++12034	perviy-kanal-vsemirnaya-set
++12035	sovsekretno
++12036	tvkultura
++12037	fenixplus
++12038	peretz
++12039	fox-life
++12040	illuzion
++12041	tdk
++12042	telekanaldetskiy
++12043	ntvplus
++12044	domashniy
++12045	tvzvezda
++12046	drive
++12047	retro
++12048	perviy-avtomobilni
++12049	axnscifi
++12050	cnl
++12051	pyatyy-kanal-sankt-peterburg
++12052	domkino
++12053	eurocinema
++12054	humorbox
++12055	spas
++12056	eurosport
++12057	rossiya-24
++12058	laminor
++12059	eurosport2
++12060	russkaya-noch
++12061	a-one
++12062	ntv-pljus-basketbol
++12063	ntv-pljus-tennis
++12064	vremea
++12065	moyaplaneta
++12066	zootv
++12067	sarafan
++12068	viasat-nature
++12069	viasat-nature-cee
++12070	karusel
++12071	psikhologiya-21
++12072	domashnie-zhivotnye
++12073	voprosy-i-otvety
++12074	viasat-history
++12075	russkiyillusion
++12076	ntv-plyus-nash-futbol
++12077	ntv-plus-sport-plus
++12078	k1
++12079	k2
++12080	khl
++12081	ntv-plus-kinohit
++12082	ntv-plyus-futbol-2
++12083	ntv-plyus-sport-2-hd
++12084	you
++12085	tv1000-megahit-hd
++12086	tv1000-premium-hd
++12087	mir
++12088	mnogo
++12089	viasat-sport-hd
++12090	mtv-ru
++12091	muz-tv
++12092	mulit
++12093	ntv-plus-nashe-kino
++12094	boomerang
++12095	ntv
++12096	ntv-plyus-nashe-kino
++12097	nashe-lyubimoe-kino
++12098	ntv-plyus-kinoklub
++12099	ntv-plyus-sport
++12100	detskiy-mir
++12101	rtvi
++12102	5-kanal
++12103	ntv-plus-premiera
++12104	ntv-plus-footbal
++12105	discovery-channel-ru
++12106	animal-planet-ru
++12107	extreme-sports
++12108	tlc
++12109	24-doc
++12110	reality
++12111	ntv-mir
++12112	okhota-i-rybalka
++12113	perviy-kanal-vsemirnaya-set
++12114	24-tehno
++12115	rbc-tv
++12116	rentv
++12117	rtr-planeta
++12118	rossia-1
++12119	rossia-2
++12120	teleclub
++12121	tv3
++12122	tv1000
++12123	tv1000-russkoe-kino
++12124	tv1000-action-east
++12125	tvc
++12126	tvc-international
++12127	usadba
++12128	viasat-sport
++12129	orujie
++12130	ntv-plus-kino-plus
++12131	jivi
++12132	zoopark
++12133	viasat-nature-history-hd
++12134	national
++12135	tvri
++12136	acasa-gold
++12137	favorit
++12138	primatv
++12139	protv
++12140	tvr-1
++12141	tvr-2
++12142	noviy-kanal
++12143	o-tv
++12144	footbal
++12145	hth
++12146	tet
++12147	tonis
++12148	kiev
++12149	kyevskaia-rus
++12150	pershii-dilovii
++12151	m-1
++12152	enter-film
++12153	ictv
++12154	inter
++12155	inter-plius
++12156	1-plus-1
++12157	perviy-kanal
++12158	stb
++12159	ucraine-trk
++12160	perviy-nacionalni
++12161	bbc
++12162	s-tv
++12163	belarus-tv
++12164	ocean
++12165	adjaria
++12166	fox-crime
++12167	zee-tv
++12168	disney
++12169	cnn
++12170	maxxi
++12171	life-hd
++12172	nat-geo-wild
++12173	natational-geographic-channel
++12174	mezzo
++12175	discovery-hd-shpwcase
++12176	euronews
++12177	discovery-world
++12178	discovery-science
++12179	tv5-monde
++12180	mgm
++12181	travel-channel
++12182	xxi-film';
++
++$list = explode("\n", $var);
++$result='';
++foreach($list as $line) {
++    $line = preg_replace("/\s+/", " ", $line);
++    list($id, $name) = explode(' ', $line);
++    $result[$id]=$name;
++}
++print serialize($result); 
+diff --git a/dune_plugin_altiptv_5.2.8/altiptv_m3u_tv.php b/dune_plugin_altiptv_5.2.8/altiptv_m3u_tv.php
+index 25847ce..c96e75f 100644
+--- a/dune_plugin_altiptv_5.2.8/altiptv_m3u_tv.php
++++ b/dune_plugin_altiptv_5.2.8/altiptv_m3u_tv.php
+@@ -1229,8 +1229,71 @@ class DemoM3uTv extends AbstractTv implements UserInputHandler
+ 		$epg_type = 9;
+ 	else if (($channel_id > 10999) && ($channel_id < 12000)&&(!$epg_type == 2))
+ 		$epg_type = 10;
++	else if (($channel_id > 11999) && ($channel_id < 13000)&&(!$epg_type == 2))
++		$epg_type = 13;
+ 	else if (($channel_id > 19999)&&(!$epg_type == 2))
+ 	return array();
++	
++	// point.md EPG
++	if ($epg_type == 13)
++	{
++		$point_id = HD::get_epg_ids($plugin_cookies,'vsetv_pointmd', $channel_id);
++		if ($point_id == false)
++			return array();
++			
++		$q_date = date("d-m-Y", $day_start_ts);
++		$epg_date = date("Ymd", $day_start_ts);
++		$epg = array();
++
++		if (file_exists(DuneSystem::$properties['tmp_dir_path']."/channel_".$channel_id."_".$day_start_ts)) {
++			$epg = unserialize(file_get_contents(DuneSystem::$properties['tmp_dir_path']."/channel_".$channel_id."_".$day_start_ts));
++		}
++		else {
++			try {
++				//https://point.md/ru/tv/%s/%s', $channel, $epg_date
++				$doc = HD::http_get_document("https://point.md/ru/tv/$point_id/$q_date");
++			}
++			catch (Exception $e) {
++				hd_print("Can't fetch EPG ID:$point_id DATE:$q_date");
++				return array();
++			}
++			
++			$doc = preg_replace("/\n/", "", $doc);
++
++			$patterns = "/<li class=\"(m-old)?\"><i>([0-9:]+)<\/i>([^<]+)<\/li>/";
++			$replace = "[$2|$3]\n";
++			$doc = strip_tags(preg_replace($patterns, $replace, $doc));
++
++			preg_match_all("/\[([0-9:]+)\|([^\]]+)\]/", $doc, $matches);
++
++			if(empty($matches[1])) throw new Exception('No EPG data.');
++			$last_time = 0;
++			foreach($matches[1] as $key => $time) {
++				$name = htmlspecialchars_decode($matches[2][$key]);
++				$u_time = strtotime("$epg_date $time");
++				$last_time = ($u_time < $last_time) ? $u_time + 86400  : $u_time;
++				$epg[$last_time]["name"] = $name;
++				$epg[$last_time]["desc"] = '';
++			}
++			
++			file_put_contents(DuneSystem::$properties['tmp_dir_path']."/channel_".$channel_id."_".$day_start_ts, serialize($epg));
++		}
++		$epg_result = array();
++		ksort($epg, SORT_NUMERIC);
++		foreach ($epg as $time => $value) {
++		    $epg_result[] =
++			new DefaultEpgItem(
++			    strval($value["name"]),
++			    strval($value["desc"]),
++			    intval($time + $epg_shift),
++			    intval(-1));
++		}
++		return new EpgIterator(
++			$epg_result,
++			$day_start_ts,
++			$day_start_ts + 100400);
++	}
++	
+ 	if ($epg_type == 10)
+ 	{
+ 	$teleman_id = HD::get_epg_ids($plugin_cookies,'vsetv_teleman', $channel_id);
+diff --git a/dune_plugin_altiptv_5.2.8/data/data_file/vsetv_pointmd b/dune_plugin_altiptv_5.2.8/data/data_file/vsetv_pointmd
+new file mode 100644
+index 0000000..baa5dd8
+--- /dev/null
++++ b/dune_plugin_altiptv_5.2.8/data/data_file/vsetv_pointmd
+@@ -0,0 +1 @@
++a:183:{i:12000;s:5:"prime";i:12001;s:7:"publika";i:12002;s:3:"tv7";i:12003;s:9:"tnt-bravo";i:12004;s:3:"ctc";i:12005;s:8:"jurnaltv";i:12006;s:3:"rtr";i:12007;s:13:"protv-moldova";i:12008;s:6:"eurotv";i:12009;s:4:"sony";i:12010;s:7:"noroctv";i:12011;s:2:"n4";i:12012;s:5:"2plus";i:12013;s:5:"acasa";i:12014;s:5:"tvc21";i:12015;s:3:"mbc";i:12016;s:8:"moldova1";i:12017;s:3:"tvr";i:12018;s:9:"accent-tv";i:12019;s:6:"zona-m";i:12020;s:10:"busuioc-tv";i:12021;s:16:"vocea-basarabiei";i:12022;s:5:"rentv";i:12023;s:3:"tnt";i:12024;s:7:"365days";i:12025;s:8:"autoplus";i:12026;s:4:"boec";i:12027;s:5:"india";i:12028;s:12:"interesnoetv";i:12029;s:9:"comediatv";i:12030;s:8:"kuhnyatv";i:12031;s:7:"mama-tv";i:12032;s:10:"multimania";i:12033;s:17:"park-razvlecheniy";i:12034;s:27:"perviy-kanal-vsemirnaya-set";i:12035;s:11:"sovsekretno";i:12036;s:9:"tvkultura";i:12037;s:9:"fenixplus";i:12038;s:6:"peretz";i:12039;s:8:"fox-life";i:12040;s:8:"illuzion";i:12041;s:3:"tdk";i:12042;s:16:"telekanaldetskiy";i:12043;s:7:"ntvplus";i:12044;s:9:"domashniy";i:12045;s:8:"tvzvezda";i:12046;s:5:"drive";i:12047;s:5:"retro";i:12048;s:18:"perviy-avtomobilni";i:12049;s:8:"axnscifi";i:12050;s:3:"cnl";i:12051;s:28:"pyatyy-kanal-sankt-peterburg";i:12052;s:7:"domkino";i:12053;s:10:"eurocinema";i:12054;s:8:"humorbox";i:12055;s:4:"spas";i:12056;s:9:"eurosport";i:12057;s:10:"rossiya-24";i:12058;s:7:"laminor";i:12059;s:10:"eurosport2";i:12060;s:13:"russkaya-noch";i:12061;s:5:"a-one";i:12062;s:19:"ntv-pljus-basketbol";i:12063;s:16:"ntv-pljus-tennis";i:12064;s:6:"vremea";i:12065;s:11:"moyaplaneta";i:12066;s:5:"zootv";i:12067;s:7:"sarafan";i:12068;s:13:"viasat-nature";i:12069;s:17:"viasat-nature-cee";i:12070;s:7:"karusel";i:12071;s:15:"psikhologiya-21";i:12072;s:19:"domashnie-zhivotnye";i:12073;s:16:"voprosy-i-otvety";i:12074;s:14:"viasat-history";i:12075;s:15:"russkiyillusion";i:12076;s:21:"ntv-plyus-nash-futbol";i:12077;s:19:"ntv-plus-sport-plus";i:12078;s:2:"k1";i:12079;s:2:"k2";i:12080;s:3:"khl";i:12081;s:16:"ntv-plus-kinohit";i:12082;s:18:"ntv-plyus-futbol-2";i:12083;s:20:"ntv-plyus-sport-2-hd";i:12084;s:3:"you";i:12085;s:17:"tv1000-megahit-hd";i:12086;s:17:"tv1000-premium-hd";i:12087;s:3:"mir";i:12088;s:5:"mnogo";i:12089;s:15:"viasat-sport-hd";i:12090;s:6:"mtv-ru";i:12091;s:6:"muz-tv";i:12092;s:5:"mulit";i:12093;s:19:"ntv-plus-nashe-kino";i:12094;s:9:"boomerang";i:12095;s:3:"ntv";i:12096;s:20:"ntv-plyus-nashe-kino";i:12097;s:19:"nashe-lyubimoe-kino";i:12098;s:18:"ntv-plyus-kinoklub";i:12099;s:15:"ntv-plyus-sport";i:12100;s:11:"detskiy-mir";i:12101;s:4:"rtvi";i:12102;s:7:"5-kanal";i:12103;s:17:"ntv-plus-premiera";i:12104;s:16:"ntv-plus-footbal";i:12105;s:20:"discovery-channel-ru";i:12106;s:16:"animal-planet-ru";i:12107;s:14:"extreme-sports";i:12108;s:3:"tlc";i:12109;s:6:"24-doc";i:12110;s:7:"reality";i:12111;s:7:"ntv-mir";i:12112;s:16:"okhota-i-rybalka";i:12113;s:27:"perviy-kanal-vsemirnaya-set";i:12114;s:8:"24-tehno";i:12115;s:6:"rbc-tv";i:12116;s:5:"rentv";i:12117;s:11:"rtr-planeta";i:12118;s:8:"rossia-1";i:12119;s:8:"rossia-2";i:12120;s:8:"teleclub";i:12121;s:3:"tv3";i:12122;s:6:"tv1000";i:12123;s:19:"tv1000-russkoe-kino";i:12124;s:18:"tv1000-action-east";i:12125;s:3:"tvc";i:12126;s:17:"tvc-international";i:12127;s:6:"usadba";i:12128;s:12:"viasat-sport";i:12129;s:6:"orujie";i:12130;s:18:"ntv-plus-kino-plus";i:12131;s:4:"jivi";i:12132;s:7:"zoopark";i:12133;s:24:"viasat-nature-history-hd";i:12134;s:8:"national";i:12135;s:4:"tvri";i:12136;s:10:"acasa-gold";i:12137;s:7:"favorit";i:12138;s:7:"primatv";i:12139;s:5:"protv";i:12140;s:5:"tvr-1";i:12141;s:5:"tvr-2";i:12142;s:11:"noviy-kanal";i:12143;s:4:"o-tv";i:12144;s:7:"footbal";i:12145;s:3:"hth";i:12146;s:3:"tet";i:12147;s:5:"tonis";i:12148;s:4:"kiev";i:12149;s:13:"kyevskaia-rus";i:12150;s:15:"pershii-dilovii";i:12151;s:3:"m-1";i:12152;s:10:"enter-film";i:12153;s:4:"ictv";i:12154;s:5:"inter";i:12155;s:11:"inter-plius";i:12156;s:8:"1-plus-1";i:12157;s:12:"perviy-kanal";i:12158;s:3:"stb";i:12159;s:11:"ucraine-trk";i:12160;s:17:"perviy-nacionalni";i:12161;s:3:"bbc";i:12162;s:4:"s-tv";i:12163;s:10:"belarus-tv";i:12164;s:5:"ocean";i:12165;s:7:"adjaria";i:12166;s:9:"fox-crime";i:12167;s:6:"zee-tv";i:12168;s:6:"disney";i:12169;s:3:"cnn";i:12170;s:5:"maxxi";i:12171;s:7:"life-hd";i:12172;s:12:"nat-geo-wild";i:12173;s:29:"natational-geographic-channel";i:12174;s:5:"mezzo";i:12175;s:21:"discovery-hd-shpwcase";i:12176;s:8:"euronews";i:12177;s:15:"discovery-world";i:12178;s:17:"discovery-science";i:12179;s:9:"tv5-monde";i:12180;s:3:"mgm";i:12181;s:14:"travel-channel";i:12182;s:8:"xxi-film";}
+\ No newline at end of file
+diff --git a/dune_plugin_altiptv_latest.zip b/dune_plugin_altiptv_latest.zip
+new file mode 100644
+index 0000000..a440c23
+Binary files /dev/null and b/dune_plugin_altiptv_latest.zip differ
+diff --git a/point.md_id.csv b/point.md_id.csv
+new file mode 100644
+index 0000000..546f6cf
+--- /dev/null
++++ b/point.md_id.csv
+@@ -0,0 +1,183 @@
++12000,prime
++12001,publika
++12002,tv7
++12003,tnt-bravo
++12004,ctc
++12005,jurnaltv
++12006,rtr
++12007,protv-moldova
++12008,eurotv
++12009,sony
++12010,noroctv
++12011,n4
++12012,2plus
++12013,acasa
++12014,tvc21
++12015,mbc
++12016,moldova1
++12017,tvr
++12018,accent-tv
++12019,zona-m
++12020,busuioc-tv
++12021,vocea-basarabiei
++12022,rentv
++12023,tnt
++12024,365days
++12025,autoplus
++12026,boec
++12027,india
++12028,interesnoetv
++12029,comediatv
++12030,kuhnyatv
++12031,mama-tv
++12032,multimania
++12033,park-razvlecheniy
++12034,perviy-kanal-vsemirnaya-set
++12035,sovsekretno
++12036,tvkultura
++12037,fenixplus
++12038,peretz
++12039,fox-life
++12040,illuzion
++12041,tdk
++12042,telekanaldetskiy
++12043,ntvplus
++12044,domashniy
++12045,tvzvezda
++12046,drive
++12047,retro
++12048,perviy-avtomobilni
++12049,axnscifi
++12050,cnl
++12051,pyatyy-kanal-sankt-peterburg
++12052,domkino
++12053,eurocinema
++12054,humorbox
++12055,spas
++12056,eurosport
++12057,rossiya-24
++12058,laminor
++12059,eurosport2
++12060,russkaya-noch
++12061,a-one
++12062,ntv-pljus-basketbol
++12063,ntv-pljus-tennis
++12064,vremea
++12065,moyaplaneta
++12066,zootv
++12067,sarafan
++12068,viasat-nature
++12069,viasat-nature-cee
++12070,karusel
++12071,psikhologiya-21
++12072,domashnie-zhivotnye
++12073,voprosy-i-otvety
++12074,viasat-history
++12075,russkiyillusion
++12076,ntv-plyus-nash-futbol
++12077,ntv-plus-sport-plus
++12078,k1
++12079,k2
++12080,khl
++12081,ntv-plus-kinohit
++12082,ntv-plyus-futbol-2
++12083,ntv-plyus-sport-2-hd
++12084,you
++12085,tv1000-megahit-hd
++12086,tv1000-premium-hd
++12087,mir
++12088,mnogo
++12089,viasat-sport-hd
++12090,mtv-ru
++12091,muz-tv
++12092,mulit
++12093,ntv-plus-nashe-kino
++12094,boomerang
++12095,ntv
++12096,ntv-plyus-nashe-kino
++12097,nashe-lyubimoe-kino
++12098,ntv-plyus-kinoklub
++12099,ntv-plyus-sport
++12100,detskiy-mir
++12101,rtvi
++12102,5-kanal
++12103,ntv-plus-premiera
++12104,ntv-plus-footbal
++12105,discovery-channel-ru
++12106,animal-planet-ru
++12107,extreme-sports
++12108,tlc
++12109,24-doc
++12110,reality
++12111,ntv-mir
++12112,okhota-i-rybalka
++12113,perviy-kanal-vsemirnaya-set
++12114,24-tehno
++12115,rbc-tv
++12116,rentv
++12117,rtr-planeta
++12118,rossia-1
++12119,rossia-2
++12120,teleclub
++12121,tv3
++12122,tv1000
++12123,tv1000-russkoe-kino
++12124,tv1000-action-east
++12125,tvc
++12126,tvc-international
++12127,usadba
++12128,viasat-sport
++12129,orujie
++12130,ntv-plus-kino-plus
++12131,jivi
++12132,zoopark
++12133,viasat-nature-history-hd
++12134,national
++12135,tvri
++12136,acasa-gold
++12137,favorit
++12138,primatv
++12139,protv
++12140,tvr-1
++12141,tvr-2
++12142,noviy-kanal
++12143,o-tv
++12144,footbal
++12145,hth
++12146,tet
++12147,tonis
++12148,kiev
++12149,kyevskaia-rus
++12150,pershii-dilovii
++12151,m-1
++12152,enter-film
++12153,ictv
++12154,inter
++12155,inter-plius
++12156,1-plus-1
++12157,perviy-kanal
++12158,stb
++12159,ucraine-trk
++12160,perviy-nacionalni
++12161,bbc
++12162,s-tv
++12163,belarus-tv
++12164,ocean
++12165,adjaria
++12166,fox-crime
++12167,zee-tv
++12168,disney
++12169,cnn
++12170,maxxi
++12171,life-hd
++12172,nat-geo-wild
++12173,natational-geographic-channel
++12174,mezzo
++12175,discovery-hd-shpwcase
++12176,euronews
++12177,discovery-world
++12178,discovery-science
++12179,tv5-monde
++12180,mgm
++12181,travel-channel
++12182,xxi-film
