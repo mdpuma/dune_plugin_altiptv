@@ -1244,7 +1244,8 @@ class DemoM3uTv extends AbstractTv implements UserInputHandler
 		$point_id = HD::get_epg_ids($plugin_cookies,'vsetv_pointmd', $channel_id);
 		if ($point_id == false)
 			return array();
-			
+
+		$epg_shift = 1;
 		$q_date = date("d-m-Y", $day_start_ts);
 		$epg_date = date("Ymd", $day_start_ts);
 		$epg = array();
@@ -1274,7 +1275,7 @@ class DemoM3uTv extends AbstractTv implements UserInputHandler
 			$last_time = 0;
 			foreach($matches[1] as $key => $time) {
 				$name = htmlspecialchars_decode($matches[2][$key]);
-				$u_time = strtotime("$epg_date $time");
+				$u_time = strtotime("$epg_date $time EEST");
 				$last_time = ($u_time < $last_time) ? $u_time + 86400  : $u_time;
 				$epg[$last_time]["name"] = $name;
 				$epg[$last_time]["desc"] = '';
@@ -1289,7 +1290,7 @@ class DemoM3uTv extends AbstractTv implements UserInputHandler
 			new DefaultEpgItem(
 			    strval($value["name"]),
 			    strval($value["desc"]),
-			    intval($time),
+			    intval($time + $epg_shift*3600),
 			    intval(-1));
 		}
 		return new EpgIterator(
