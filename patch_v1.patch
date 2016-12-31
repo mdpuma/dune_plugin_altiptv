@@ -297,7 +297,7 @@ index 25847ce..c96e75f 100644
 +			new DefaultEpgItem(
 +			    strval($value["name"]),
 +			    strval($value["desc"]),
-+			    intval($time + $epg_shift),
++			    intval($time),
 +			    intval(-1));
 +		}
 +		return new EpgIterator(

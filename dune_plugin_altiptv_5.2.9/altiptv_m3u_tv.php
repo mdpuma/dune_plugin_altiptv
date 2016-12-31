@@ -1289,7 +1289,7 @@ class DemoM3uTv extends AbstractTv implements UserInputHandler
 			new DefaultEpgItem(
 			    strval($value["name"]),
 			    strval($value["desc"]),
-			    intval($time + $epg_shift),
+			    intval($time),
 			    intval(-1));
 		}
 		return new EpgIterator(
