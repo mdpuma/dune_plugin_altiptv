@@ -1271,7 +1271,10 @@ class DemoM3uTv extends AbstractTv implements UserInputHandler
 
 			preg_match_all("/\[([0-9:]+)\|([^\]]+)\]/", $doc, $matches);
 
-			if(empty($matches[1])) throw new Exception('No EPG data.');
+			if(empty($matches[1])) {
+				hd_print('No EPG data.');
+				return array();
+			}
 			$last_time = 0;
 			foreach($matches[1] as $key => $time) {
 				$name = htmlspecialchars_decode($matches[2][$key]);
