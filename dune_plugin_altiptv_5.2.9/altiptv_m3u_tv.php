@@ -1263,18 +1263,23 @@ class DemoM3uTv extends AbstractTv implements UserInputHandler
 				return array();
 			}
 			
-			$doc = preg_replace("/\n/", "", $doc);
-
-			$patterns = "/<li class=\"(m-old)?\"><i>([0-9:]+)<\/i>([^<]+)<\/li>/";
-			$replace = "[$2|$3]\n";
-			$doc = strip_tags(preg_replace($patterns, $replace, $doc));
-
-			preg_match_all("/\[([0-9:]+)\|([^\]]+)\]/", $doc, $matches);
-
-			if(empty($matches[1])) {
+			try {
+				$doc = preg_replace("/\n/", "", $doc);
+				
+				$patterns = "/<li class=\"(m-old)?\"><i>([0-9:]+)<\/i>([^<]+)<\/li>/";
+				$replace = "[$2|$3]\n";
+				$doc = strip_tags(preg_replace($patterns, $replace, $doc));
+				
+				preg_match_all("/\[([0-9:]+)\|([^\]]+)\]/", $doc, $matches);
+				if(empty($matches[1])) {
+					throw new Exception('No EPG data.');
+				}
+			}
+			catch (Exception $e) {
 				hd_print('No EPG data.');
 				return array();
 			}
+			
 			$last_time = 0;
 			foreach($matches[1] as $key => $time) {
 				$name = htmlspecialchars_decode($matches[2][$key]);
